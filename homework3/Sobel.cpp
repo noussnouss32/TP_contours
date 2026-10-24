@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-//g++ Sobel.cpp -o Sobel $(pkg-config --cflags --libs opencv4) && ./Sobel
+//Pour compiler: g++ Sobel.cpp -o Sobel $(pkg-config --cflags --libs opencv4) && ./Sobel
 
 struct Metrics {
     int contours_detectes = 0;
