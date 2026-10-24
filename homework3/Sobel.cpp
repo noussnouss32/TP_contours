@@ -16,14 +16,15 @@ struct Metrics {
     double tfn = 0.0;
 };
 
+//Fonction de comparaison entre une réference et le contour tracé par le programme
 Metrics evaluerContours(const cv::Mat& detected, const cv::Mat& reference) {
     Metrics m;
     
     cv::Mat det_bin, ref_bin; 
-    // Pour l'image détectée (contours nets) : seuil standard à 127 
+    // Pour l'image détectée 
     cv::threshold(detected, det_bin, 127, 255, cv::THRESH_BINARY);
     
-    // Pour l'image de référence (traits gris clairs) : seuil haut à 230 pour ne pas rater les traits
+    // Pour l'image de référence 
     cv::threshold(reference, ref_bin, 230, 255, cv::THRESH_BINARY);
 
     // S'assurer que les deux images ont exactement la même taille
@@ -87,7 +88,7 @@ Metrics evaluerContours(const cv::Mat& detected, const cv::Mat& reference) {
 cv::Mat contours;
 cv::Mat reference;
 
-// Fonction appelée automatiquement à chaque clic de souris
+// Fonction affichant les resultats de comparaison dans le terminal à chaque clic de souris
 void mouseCallback(int event, int x, int y, int flags, void* userdata) {
     if (event == cv::EVENT_LBUTTONDOWN) { // Si clic gauche de la souris
         if (contours.empty() || reference.empty()) {
@@ -121,11 +122,7 @@ int main() {
         std::cout << "================================================================" << std::endl;
         std::cout << "Pour parcourir le lot d'images, cliquez sur les flêches de votre clavier," << std::endl;
         std::cout << "sinon, cliquez sur les touches 'd' et 'g' de votre clavier." << std::endl;
-        std::cout << "Utilisez les trackbars pour ajuster les 4 paramètres suivants:" << std::endl;
-        std::cout << "- Detecteur (0:Sobel, 1:Laplace, 2:Canny)" << std::endl;
-        std::cout << "- Taille du filtre (3,5 ou 7)" << std::endl;
-        std::cout << "- Param 1 (Seuil pour Sobel et Laplace + seuil bas pour canny)" << std::endl;
-        std::cout << "- Param 2 (Seuil haut pour Canny) \n\n" << std::endl;
+        
 
     // Récupérer toutes les images du dossier "images" et les trier par ordre alphabétique
     std::vector<std::string> image_paths;
@@ -145,6 +142,7 @@ int main() {
         std::cout << "Aucune reference trouvee dans le dossier references !" << std::endl;
         return -1;
     }
+        
     size_t img_index = 0; // Index de l'image actuelle
 
     // Variables pour les trackbars
@@ -154,7 +152,7 @@ int main() {
     int param2 = 150;      // Seuil 2 pour Canny
 
     
-    // Création de la fenêtre et des trackbars propres 
+    // Création de la fenêtre et des trackbars
     cv::namedWindow("Contours Evaluation");
     cv::createTrackbar("Detecteur (0:Sobel, 1:Laplace, 2:Canny)", "Contours Evaluation", &detector_type, 2);
     cv::createTrackbar("Taille du filtre (3,5 ou 7)", "Contours Evaluation", &filter_size, 2); 
