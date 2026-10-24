@@ -4,7 +4,7 @@
 
 //Pour compiler: g++ Sobel.cpp -o Sobel $(pkg-config --cflags --libs opencv4) && ./Sobel
 
-//Structure
+//Structure englobant les 5 grandeurs et 3 mesure d'évaluation
 struct Metrics {
     int contours_detectes = 0;
     int contours_reference = 0;
